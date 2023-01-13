@@ -14,7 +14,8 @@ type SignatureFile struct {
 	Signature uint64
 }
 
-// Signature of the input file. If two signatures are different from two versions of the same file, use Delta to create a patch
+// Signature of the input file. If two signatures are different from two
+// versions of the same file, use Delta to create a patch
 func Signature(input io.Reader) ([]*SignatureFile, error) {
 	b := make([]byte, chunker.MaxSize)
 	c := chunker.New(input, 0x3dea92648f6e83)

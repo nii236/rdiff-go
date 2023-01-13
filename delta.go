@@ -17,7 +17,8 @@ type PatchFile struct {
 	// Index of diffs to apply the patch
 	Diffs []*Diff
 
-	// Separate hashmap for literal bytes (signature as key) means we can reuse the map value if a byte pattern occurs multiple times throughout the file
+	// Separate hashmap for literal bytes (signature as key) means we can
+	// reuse the map value if a byte pattern occurs multiple times throughout the file
 	ByteMap map[uint64][]byte
 }
 
@@ -38,7 +39,13 @@ func Delta(oldSignature []*SignatureFile, newFile io.Reader) (*PatchFile, error)
 
 		// Handle case when new file is longer than old file
 		if len(oldSignature) < i+1 {
-			result.Diffs = append(result.Diffs, &Diff{Start: newSig.Chunk.Start, Signature: newSig.Signature, Length: newSig.Chunk.Length, Cut: newSig.Chunk.Cut})
+			result.Diffs = append(result.Diffs, &Diff{
+				Start:     newSig.Chunk.Start,
+				Signature: newSig.Signature,
+				Length:    newSig.Chunk.Length,
+				Cut:       newSig.Chunk.Cut,
+			},
+			)
 			_, ok := result.ByteMap[newSig.Signature]
 			if !ok {
 				result.ByteMap[newSig.Signature] = newSig.Chunk.Data
@@ -48,7 +55,12 @@ func Delta(oldSignature []*SignatureFile, newFile io.Reader) (*PatchFile, error)
 
 		// Standard case
 		if oldSignature[i].Signature != newSignatureTable[i].Signature {
-			result.Diffs = append(result.Diffs, &Diff{Start: newSig.Chunk.Start, Signature: newSig.Signature, Length: newSig.Chunk.Length, Cut: newSig.Chunk.Cut})
+			result.Diffs = append(result.Diffs, &Diff{
+				Start:     newSig.Chunk.Start,
+				Signature: newSig.Signature,
+				Length:    newSig.Chunk.Length,
+				Cut:       newSig.Chunk.Cut,
+			})
 			_, ok := result.ByteMap[newSig.Signature]
 			if !ok {
 				result.ByteMap[newSig.Signature] = newSig.Chunk.Data

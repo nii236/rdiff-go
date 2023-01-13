@@ -39,7 +39,12 @@ func TestSignature(t *testing.T) {
 			assert.Nil(t, err)
 
 			for _, el := range got {
-				t.Logf("pos: %04d len: %04d digest: %04d signature: %x\n", el.Chunk.Start, el.Chunk.Length, el.Chunk.Cut, el.Signature)
+				t.Logf("pos: %04d len: %04d digest: %04d signature: %x\n",
+					el.Chunk.Start,
+					el.Chunk.Length,
+					el.Chunk.Cut,
+					el.Signature,
+				)
 			}
 		})
 	}
